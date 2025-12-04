@@ -38,3 +38,8 @@ export const walletClients: Record<ChainId, WalletClient> = {
     transport: http(DEFAULT_RPC_URLS[ChainId.BSC]),
   }),
 }
+
+export const GET_LOGS_BLOCKS = {
+  [ChainId.MAINNET]: 1000n,
+  [ChainId.BSC]: 1000n,
+}

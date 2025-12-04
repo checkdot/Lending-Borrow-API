@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from "express"
 import dotenv from "dotenv"
 import { connectDatabase } from "./config/database"
 import rewardsRoutes from "./routes/rewards"
-import "./web3"
 import "./jobs"
 
 // Load environment variables
