@@ -62,7 +62,7 @@ export const LENDING_CONTRACT_ADDRS = {
   [ChainId.BSC]: "0x0000000000000000000000000000000000000000",
 }
 
-export const START_BLOCK_NUMBERS = {
+export const DEFAULT_START_BLOCKS = {
   [ChainId.MAINNET]: 0n,
   [ChainId.BSC]: 0n,
 }

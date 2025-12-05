@@ -2,7 +2,9 @@ import express, { Request, Response, NextFunction } from "express"
 import dotenv from "dotenv"
 import { connectDatabase } from "./config/database"
 import rewardsRoutes from "./routes/rewards"
-import "./jobs"
+
+import "./jobs/event"
+import "./jobs/reward"
 
 // Load environment variables
 dotenv.config()
