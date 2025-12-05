@@ -88,6 +88,7 @@ async function calculateTotalParts(
 
     for (const walletHolding of walletHoldings) {
       const amount = getWalletAmount(walletHolding, type, chain, symbol)
+      if (amount === 0n) continue; // Skip wallets with no amount
       totalParts += amount
     }
 
@@ -125,6 +126,8 @@ async function distributeRewards(
 
     const bulkOps = walletHoldings.map((walletHolding) => {
       const amount = getWalletAmount(walletHolding, type, chain, symbol)
+      if (amount === 0n) return undefined; // Skip wallets with no amount
+
       const rewardAmount = (dailyReward * amount) / totalParts
 
       return {
@@ -145,7 +148,7 @@ async function distributeRewards(
     })
 
     if (bulkOps.length > 0) {
-      await WalletHolding.bulkWrite(bulkOps)
+      await WalletHolding.bulkWrite(bulkOps.filter((op) => op !== undefined))
     }
 
     skip += BATCH_SIZE
