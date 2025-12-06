@@ -88,7 +88,7 @@ async function calculateTotalParts(
 
     for (const walletHolding of walletHoldings) {
       const amount = getWalletAmount(walletHolding, type, chain, symbol)
-      if (amount === 0n) continue; // Skip wallets with no amount
+      if (amount === 0n) continue // Skip wallets with no amount
       totalParts += amount
     }
 
@@ -108,6 +108,8 @@ async function distributeRewards(
   type: string,
   chain: number,
   symbol: string,
+  rewardChain: number,
+  rewardSymbol: string,
   dailyReward: bigint,
   totalParts: bigint,
   currentTime: number
@@ -126,7 +128,7 @@ async function distributeRewards(
 
     const bulkOps = walletHoldings.map((walletHolding) => {
       const amount = getWalletAmount(walletHolding, type, chain, symbol)
-      if (amount === 0n) return undefined; // Skip wallets with no amount
+      if (amount === 0n) return undefined // Skip wallets with no amount
 
       const rewardAmount = (dailyReward * amount) / totalParts
 
@@ -136,8 +138,8 @@ async function distributeRewards(
           update: {
             $push: {
               rewards: {
-                chain,
-                symbol,
+                chain: rewardChain,
+                symbol: rewardSymbol,
                 amount: rewardAmount,
                 date: currentTime,
               },
@@ -185,6 +187,8 @@ async function processDailyRewards(): Promise<void> {
     type,
     poolReward.chain,
     poolReward.symbol,
+    poolReward.totalReward.chain,
+    poolReward.totalReward.symbol,
     dailyReward,
     totalParts,
     currentTime
